@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Image, Button } from "@shopify/polaris";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import axios from "axios";
-import { getSessionToken } from "@shopify/app-bridge/utilities";
 import "./cardSelector.css";
+import { useAuthenticatedFetch } from "../../hooks";
 
 const CardSelector = () => {
   const [selectedImages, setSelectedImages] = useState([]);
-
+  const fetch = useAuthenticatedFetch();
   useEffect(() => {
     const fetchBadges = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/api/badges");
-        const badges = response.data;
-        setSelectedImages(badges);
+        await fetch("/api/badges")
+          .then((response) => response.json())
+          .then((data) => {
+            setSelectedImages(data);
+          });
       } catch (err) {
         console.log(err);
       }
@@ -23,18 +25,24 @@ const CardSelector = () => {
 
   const handleClick = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/badges",
-        selectedImages
-      );
-      console.log(response);
-      //alert the user that the badges were saved
-      alert("Badges are saved");
+      const response = await fetch("/api/badges", {
+        method: "POST",
+        body: JSON.stringify(selectedImages),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        console.log(response);
+        // Alert the user that the badges were saved
+        alert("Badges are saved");
+      } else {
+        throw new Error("Request failed");
+      }
     } catch (err) {
       console.log(err);
     }
-
-    console.log(selectedImages);
   };
 
   return (
