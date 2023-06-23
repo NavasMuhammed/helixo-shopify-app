@@ -9,11 +9,14 @@
     "dev": "shopify app dev",
     "info": "shopify app info",
     "generate": "shopify app generate",
-    "deploy": "shopify app deploy"
+    "deploy": "shopify app deploy",
+    "webpack-bundle": "webpack --mode development"
   },
   "dependencies": {
     "@shopify/app": "3.46.5",
-    "@shopify/cli": "3.46.5"
+    "@shopify/cli": "3.46.5",
+    "webpack": "4.44.0",
+    "webpack-cli": "4.10.0"
   },
   "author": "Navas Muhammed",
   "private": true,
