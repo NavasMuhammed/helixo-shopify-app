@@ -1,15 +1,43 @@
 <div class="wrapper--container">
-  <div id="image-container" style="width: 100px; height: 100 px; background: red;">
-    <span>im image</span>
-  </div>
-  <span>here</span>
+  <div id="image-container" style=" display:flex;gap:10px;flex-wrap:wrap;"></div>
 </div>
 
+<script>
+  // Fetch data containing image URLs
+  fetch('http://localhost:3001/api/badges').then(function(response) {
+    return response.json();
+  }).then(function(dataList) {
+
+// Get the image container element
+    var imageContainer = document.getElementById('image-container');
+
+// Generate the HTML content with the images from the data list
+    var content = '';
+    dataList.forEach(function(data) {
+      if (data.state === true) {
+        content += '<div>' + '<img class="small-image" src="' + data.url + '" alt="">' + '</div>';
+      }
+    });
+
+// Set the content inside the image container
+    imageContainer.innerHTML = content;
+  }).catch(function(error) {
+    console.error('Error:', error);
+  });
+</script>
+<style>
+  .small-image {
+    width: 50px;
+    border: 1px solid #0000003c;
+    border-radius: 8px;
+    height: auto;
+    background-color: #ffffffcb;
+  }
+</style>
 {% schema %}
   {
     "name": "badge",
-    "target": "section",
-    "javascript": "bundled-badges.js"
+    "target": "section"
 
   }
 {% endschema %}
