@@ -1,160 +1,28 @@
-import { useAuthenticatedFetch } from "../../../web/frontend/hooks/useAuthenticatedFetch.js";
-
-// JavaScript code
-var apiUrl = "/api/badges"; // Replace with your API endpoint
-var imageContainer = document.getElementById("image-container");
-
-useAuthenticatedFetch(apiUrl)
+// Fetch data containing image URLs
+fetch("https://helixo-backend.onrender.com/api/badges")
   .then(function (response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error("Error: " + response.status);
-    }
+    return response.json();
   })
-  .then(function (data) {
-    data.forEach(function (item) {
-      if (item.state === true) {
-        var imageUrl = item.url;
+  .then(function (dataList) {
+    // Get the image container element
+    var imageContainer = document.getElementById("image-container");
 
-        if (imageUrl) {
-          var imageElement = document.createElement("img");
-          imageElement.src = imageUrl;
-          imageElement.alt = "API Image";
-          imageContainer.appendChild(imageElement);
-        } else {
-          var noImageElement = document.createElement("p");
-          noImageElement.textContent = "No image found";
-          imageContainer.appendChild(noImageElement);
-        }
+    // Generate the HTML content with the images from the data list
+    var content = "";
+    dataList.forEach(function (data) {
+      if (data.state === true) {
+        content +=
+          "<div>" +
+          '<img class="small-image" src="' +
+          data.url +
+          '" alt="">' +
+          "</div>";
       }
     });
+
+    // Set the content inside the image container
+    imageContainer.innerHTML = content;
   })
   .catch(function (error) {
-    console.error("Request failed:", error);
+    console.error("Error:", error);
   });
-
-{
-  /* <script>
-    // JavaScript code
-    var apiUrl = 'http://localhost:3001/api/badges'; // Replace with your API endpoint
-    var imageContainer = document.getElementById("image-container");
-  
-    fetch(apiUrl)
-      .then(function(response) {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Error: ' + response.status);
-        }
-      })
-      .then(function(data) {
-        data.forEach(function(item) {
-          if (item.state === true) {
-            var imageUrl = item.url; // Replace with the appropriate property in your API response
-  
-            if (imageUrl) {
-              var imageElement = document.createElement('img');
-              imageElement.src = imageUrl;
-              imageElement.alt = 'API Image';
-              imageContainer.appendChild(imageElement);
-            } else {
-              var noImageElement = document.createElement('p');
-              noImageElement.textContent = 'No image found';
-              imageContainer.appendChild(noImageElement);
-            }
-          }
-        });
-      })
-      .catch(function(error) {
-        console.error('Request failed:', error);
-      });
-  </script> */
-}
-
-// <div class="wrapper--container">
-//   <div id="image-container"></div>
-// </div>
-
-// {% {% schema %}
-//   {
-//     "name": "badge",
-//     "target":"block",
-//     "javascript": "bundled-badges.js",
-
-//   }
-// {% endschema %} %}
-
-// import { useAuthenticatedFetch } from "../../../web/frontend/hooks/useAuthenticatedFetch.js";
-
-// // JavaScript code
-// var apiUrl = "/api/badges"; // Replace with your API endpoint
-// var imageContainer = document.getElementById("image-container");
-
-// useAuthenticatedFetch(apiUrl)
-//   .then(function (response) {
-//     if (response.ok) {
-//       return response.json();
-//     } else {
-//       throw new Error("Error: " + response.status);
-//     }
-//   })
-//   .then(function (data) {
-//     data.forEach(function (item) {
-//       if (item.state === true) {
-//         var imageUrl = item.url;
-
-//         if (imageUrl) {
-//           var imageElement = document.createElement("img");
-//           imageElement.src = imageUrl;
-//           imageElement.alt = "API Image";
-//           imageContainer.appendChild(imageElement);
-//         } else {
-//           var noImageElement = document.createElement("p");
-//           noImageElement.textContent = "No image found";
-//           imageContainer.appendChild(noImageElement);
-//         }
-//       }
-//     });
-//   })
-//   .catch(function (error) {
-//     console.error("Request failed:", error);
-//   });
-
-{
-  /* <script>
-  // JavaScript code
-  var apiUrl = 'http://localhost:3001/api/badges'; // Replace with your API endpoint
-  var imageContainer = document.getElementById("image-container");
-
-  fetch(apiUrl)
-    .then(function(response) {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Error: ' + response.status);
-      }
-    })
-    .then(function(data) {
-      data.forEach(function(item) {
-        if (item.state === true) {
-          var imageUrl = item.url; // Replace with the appropriate property in your API response
-
-          if (imageUrl) {
-            var imageElement = document.createElement('img');
-            imageElement.src = imageUrl;
-            imageElement.alt = 'API Image';
-            imageContainer.appendChild(imageElement);
-          } else {
-            var noImageElement = document.createElement('p');
-            noImageElement.textContent = 'No image found';
-            imageContainer.appendChild(noImageElement);
-          }
-        }
-      });
-    })
-    .catch(function(error) {
-      console.error('Request failed:', error);
-    });
-</script> */
-}
