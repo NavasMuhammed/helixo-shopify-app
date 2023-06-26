@@ -10,13 +10,11 @@
     "info": "shopify app info",
     "generate": "shopify app generate",
     "deploy": "shopify app deploy",
-    "webpack-bundle": "webpack --mode development"
+    "webpack-bundle": "webpack --mode production"
   },
   "dependencies": {
     "@shopify/app": "3.46.5",
-    "@shopify/cli": "3.46.5",
-    "webpack": "4.44.0",
-    "webpack-cli": "4.10.0"
+    "@shopify/cli": "3.46.5"
   },
   "author": "Navas Muhammed",
   "private": true,
@@ -24,5 +22,15 @@
     "web",
     "web/frontend",
     "extensions/*"
-  ]
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.8.1",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4"
+  }
 }

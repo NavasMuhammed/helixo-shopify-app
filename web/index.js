@@ -40,9 +40,19 @@ app.post(
 app.use("/api/*", shopify.validateAuthenticatedSession());
 
 app.use(express.json());
+app.use(express.static("public"));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 app.get("/api/products/count", async (_req, res) => {
   const countData = { count: "hellow" };
+  console.log(countData);
+  res.status(200).send(countData);
+});
+app.get("/products/newBunlded.js", async (_req, res) => {
+  const countData = "hello";
   console.log(countData);
   res.status(200).send(countData);
 });
