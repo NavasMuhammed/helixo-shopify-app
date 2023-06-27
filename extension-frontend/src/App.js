@@ -7,7 +7,7 @@ function App() {
     const fetchBadges = async () => {
       try {
         setLoading(true);
-        await fetch("https://helixo-backend.onrender.com/api/badges")
+        await fetch("http://localhost:58693/api/badges")
           .then((response) => response.json())
           .then((data) => {
             console.log(data);

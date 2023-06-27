@@ -7,14 +7,17 @@ import { useAuthenticatedFetch } from "../../hooks";
 
 const CardSelector = () => {
   const [selectedImages, setSelectedImages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const fetch = useAuthenticatedFetch();
   useEffect(() => {
     const fetchBadges = async () => {
       try {
+        setLoading(true);
         await fetch("/api/badges")
           .then((response) => response.json())
           .then((data) => {
             setSelectedImages(data);
+            setLoading(false);
           });
       } catch (err) {
         console.log(err);
@@ -25,6 +28,7 @@ const CardSelector = () => {
 
   const handleClick = async () => {
     try {
+      setLoading(true);
       const response = await fetch("/api/badges", {
         method: "POST",
         body: JSON.stringify(selectedImages),
@@ -35,8 +39,9 @@ const CardSelector = () => {
 
       if (response.ok) {
         console.log(response);
-        // Alert the user that the badges were saved
         alert("Badges are saved");
+        setLoading(false);
+        // Alert the user that the badges were saved
       } else {
         throw new Error("Request failed");
       }
@@ -66,9 +71,15 @@ const CardSelector = () => {
           ))}
         </div>
       )}
-      <Button primary onClick={handleClick}>
-        SAVE
-      </Button>
+      {loading ? (
+        <Button primary loading>
+          Loading...
+        </Button>
+      ) : (
+        <Button primary onClick={handleClick}>
+          SAVE
+        </Button>
+      )}
     </div>
   );
 };

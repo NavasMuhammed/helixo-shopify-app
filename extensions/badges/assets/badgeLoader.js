@@ -8,7 +8,7 @@ function loadScript(URL, loaded = () => {}) {
   document.getElementsByTagName("head")[0].appendChild(element);
 }
 
-const scriptURL = "http://localhost:50193/build/static/js/main.62510361.js";
+const scriptURL = "http://localhost:3002/build/static/js/main.62510361.js";
 loadScript(scriptURL, () => {
   // Script loaded callback
   console.log("Script loaded!");

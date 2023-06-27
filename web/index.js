@@ -10,10 +10,12 @@ import GDPRWebhookHandlers from "./gdpr.js";
 import { connect } from "./database/connection.js";
 import { Badge } from "./models/User.model.js";
 
-const PORT = parseInt(
-  process.env.BACKEND_PORT || process.env.PORT || "3000",
-  10
-);
+// const PORT = parseInt(
+//   process.env.BACKEND_PORT || process.env.PORT || "3000",
+//   10
+// );
+
+const PORT = 3002;
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
@@ -51,11 +53,6 @@ app.get("/api/products/count", async (_req, res) => {
   console.log(countData);
   res.status(200).send(countData);
 });
-app.get("/products/newBunlded.js", async (_req, res) => {
-  const countData = "hello";
-  console.log(countData);
-  res.status(200).send(countData);
-});
 
 app.get("/api/products/create", async (_req, res) => {
   const data = { title: "Burton Custom Freestyle 151" };
@@ -66,6 +63,15 @@ app.get("/api/products/create", async (_req, res) => {
 });
 
 app.get("/api/badges", async (_req, res) => {
+  try {
+    const badges = await Badge.find();
+    res.json(badges);
+    console.log(badges);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+app.get("/badges", async (_req, res) => {
   try {
     const badges = await Badge.find();
     res.json(badges);
