@@ -15,7 +15,7 @@ import { Badge } from "./models/User.model.js";
 //   10
 // );
 
-const PORT = 3002;
+const PORT = process.env.STATIC_PORT;
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"

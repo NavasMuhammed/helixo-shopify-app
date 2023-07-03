@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
-// import dotenv from "dotenv";
-// dotenv.config();
+import dotenv from "dotenv";
+dotenv.config();
 // eslint-disable-next-line no-undef
-const apiKey =
-  "mongodb+srv://navasMuhammed:kunjattu%4027@cluster0.zb5zevl.mongodb.net/?retryWrites=true&w=majority";
+const apiKey = process.env.MONGODB_API_KEY;
 
 export async function connect() {
   try {
